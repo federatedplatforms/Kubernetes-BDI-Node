@@ -35,12 +35,32 @@ There are different approaches that exist to direct Level 4 traffic towards the 
 
 ### Installation
 
-- Run `helm dep update` to cache all charts as needed.
-- Run `helm upgrade --install -n DEPLOYMENT_NAMESPACE --create-namespace DEPLOYMENT_NAME .` to install the marked components. For example, `helm upgrade --install -n bdi-node --create-namespace bdi-node .`.
+- Run the following command to cache all charts as needed.
+```
+helm dep update
+```
+ 
+- Run the following to install the marked components.
+
+```
+helm upgrade --install -n DEPLOYMENT_NAMESPACE --create-namespace DEPLOYMENT_NAME .
+```
+For example, 
+
+```
+helm upgrade --install -n bdi-node --create-namespace bdi-node .
+```
 
 
 ### Uninstallation 
-- Run `helm uninstall -n DEPLOYMENT_NAMESPACE DEPLOYMENT_NAME` to clear all deployed resources. For example, `helm uninstall -n bdi-node bdi-node`.
+- Run the following script to clear all deployed resources. 
+```
+helm uninstall -n DEPLOYMENT_NAMESPACE DEPLOYMENT_NAME
+``` 
+For example, 
+```
+helm uninstall -n bdi-node bdi-node
+```
 - For a clean uninstall, it may help to also delete the namespace entirely.
 
 ## Future updates
