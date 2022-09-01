@@ -38,6 +38,11 @@ There are different approaches that exist to direct Level 4 traffic towards the 
 - Run `helm dep update` to cache all charts as needed.
 - Run `helm upgrade --install -n DEPLOYMENT_NAMESPACE --create-namespace DEPLOYMENT_NAME .` to install the marked components. For example, `helm upgrade --install -n bdi-node --create-namespace bdi-node .`.
 
+
+### Uninstallation 
+- Run `helm uninstall -n DEPLOYMENT_NAMESPACE DEPLOYMENT_NAME` to clear all deployed resources. For example, `helm uninstall -n bdi-node bdi-node`.
+- For a clean uninstall, it may help to also delete the namespace entirely.
+
 ## Future updates
 - Support ingress support for Client API, currently unsupported.
 - Support deployment of node as Notary
