@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ template "corda-node.fullname" $ }}-corda
+  labels: {{ include "corda-node.labels" $ | nindent 4 }}
+spec:
+  serviceName:  {{ template "corda-node.fullname" . }}
+  replicas: 1
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ template "corda-node.fullname" $ }}-pv
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 8Gi  
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ template "corda-node.fullname" $ }}-corda
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ template "corda-node.fullname" $ }}-corda
+        app.kubernetes.io/instance: {{ .Release.Name }}    
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      hostname: {{ template "corda-node.fullname" $ }}-corda          
+      volumes:
+        - name: {{ template "corda-node.fullname" $ }}-config
+          configMap:
+            name: {{ template "corda-node.fullname" $ }}-config
+        - name: {{ .Values.secrets.name }}
+          secret:
+            secretName: {{ .Values.secrets.name }}
+      initContainers:
+      - name: init-corda
+        image: {{ .Values.image }}
+        env:
+        - name: CORDA_ARGS
+          value: "--initial-registration --network-root-truststore /tmp/network-truststore.jks --network-root-truststore-password trustpass"
+        ports:
+          - containerPort: 10006
+            protocol: TCP
+            name: rpc
+          - containerPort: 10005
+            protocol: TCP
+            name: p2p
+        volumeMounts:
+          - mountPath: "/opt/corda/certificates"
+            name: {{ template "corda-node.fullname" $ }}-pv
+          - mountPath: /etc/corda/node.conf
+            name: {{ template "corda-node.fullname" $ }}-config
+            subPath: node.conf
+          - mountPath: /tmp/network-truststore.jks
+            name: {{ .Values.secrets.name }}
+            subPath: network-truststore.jks
+        securityContext:
+          allowPrivilegeEscalation: false
+      containers:      
+      - name: corda
+        image: {{ .Values.image }}
+        ports:
+          - containerPort: 10006
+            protocol: TCP
+            name: rpc
+          - containerPort: 10005
+            protocol: TCP
+            name: p2p
+        volumeMounts:
+          - mountPath: "/opt/corda/certificates"
+            name: {{ template "corda-node.fullname" $ }}-pv
+          - mountPath: /etc/corda/node.conf
+            name: {{ template "corda-node.fullname" $ }}-config
+            subPath: node.conf
+          - mountPath: /opt/corda/database.properties
+            name: {{ template "corda-node.fullname" $ }}-config
+            subPath: database.properties
+          - mountPath: /tmp/network-truststore.jks
+            name: {{ .Values.secrets.name }}
+            subPath: network-truststore.jks

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "corda-node.fullname" $ }}-config
+data:
+  {{- if .Values.graphdb.enabled }}
+  database.properties: |-
+    triplestore.protocol=http
+    triplestore.host={{ .Values.graphdb.host }}
+    triplestore.port={{ .Values.graphdb.port }}
+    triplestore.repository=federated-shacl
+  {{ end -}}
+  node.conf: |-
+   {{ tpl .Values.nodeConf $ | nindent 4}}
+  
+binaryData:
+{{ if .Values.networkParameters }}
+  network-parameters:
+{{ .Values.networkParameters | quote | indent 4 }}
+{{ end }}

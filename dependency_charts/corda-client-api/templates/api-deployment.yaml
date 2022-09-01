@@ -1,0 +1,51 @@
+{{- if .Values.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "corda-client-api.fullname" . }}
+  labels:
+    {{- include "corda-client-api.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "corda-client-api.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "corda-client-api.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: andreasdog/corda-client-springboot:0.1.0
+          args:
+            - /bin/bash
+            - -c
+            - sleep 40 && java -Dserver.port=$springPort -Dconfig.rpc.host=$cordaHost -Dconfig.rpc.port=$cordaPort -Dconfig.rpc.username=$cordaUser -Dconfig.rpc.password=$cordaPassword -jar clients.jar
+          env:
+            - name: cordaHost
+              value: {{ .Values.configmap.config.rpc.host }}
+            - name: cordaPort
+              value: "{{ .Values.configmap.config.rpc.port }}"
+            - name: cordaUser
+              value: {{ .Values.configmap.config.rpc.username }}
+            - name: cordaPassword
+              value: {{ .Values.configmap.config.rpc.password }}
+            - name: springPort
+              value: "{{ .Values.configmap.server.port }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.configmap.server.port }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+{{ end -}}

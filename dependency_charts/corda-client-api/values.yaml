@@ -1,0 +1,20 @@
+service:
+  port: 10050
+  type: HTTP
+image:
+  pullPolicy: Always
+
+enabled: true
+
+ingress:
+  enabled: false
+
+configmap:
+  server:
+    port: 10050
+  config:
+    rpc:
+      host: corda
+      port: 10006
+      username: user1 
+      password: vzzuABeCut3jGoJfEp94
