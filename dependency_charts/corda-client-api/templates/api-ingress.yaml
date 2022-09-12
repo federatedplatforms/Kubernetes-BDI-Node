@@ -11,10 +11,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - {{ include "corda-client-api.fullname" . }}
+        - {{ .Values.ingress.host }}
       secretName: {{ include "corda-client-api.fullname" . }}-tls
   rules:
-  - host: {{ include "corda-client-api.fullname" . }}
+  - host: {{ .Values.ingress.host }}
     http:
       paths:
       - path: /
@@ -22,7 +22,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: corda-client-api
+            name: {{ include "corda-client-api.fullname" . }}
             port:
-              number: 80
+              number: {{ .Values.service.port }}
 {{ end -}}

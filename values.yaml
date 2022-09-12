@@ -68,7 +68,15 @@ corda-client-api:
   
   # Pull Policy for the image.
   image:
+    name: andreasdog/corda-client-springboot:0.1.0 # Default image used for applications (change for development)
     pullPolicy: Always
+
+  # Enable ingress on the image (default parameters, see template for details)
+  ingress:
+    enabled: true
+    # Replace with hostname you wish to use (see template for details). 
+    # TLS is automatically added, if LetsEncrypt ClusterIssuer is configured for the cluster.
+    host: $HOSTNAME
 
 
   # Configuration used for the server.

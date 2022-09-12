@@ -1,13 +1,16 @@
-service:
-  port: 10050
-  type: HTTP
 image:
+  name: andreasdog/corda-client-springboot:0.1.0
   pullPolicy: Always
 
 enabled: true
 
+service:
+  port: 10050
+  type: ClusterIP
+
 ingress:
   enabled: false
+  host: corda-client-api.local
 
 configmap:
   server:
