@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "corda-client-api.fullname" $ }}-config
+data:
+  {{- if .Values.graphdb.enabled }}
+  database.properties: |-
+    tradelens.apikey={{ .Values.graphdb.tradelens.apikey }}
+    tradelens.orgId={{ .Values.graphdb.tradelens.orgId }}
+
+  {{ end -}}

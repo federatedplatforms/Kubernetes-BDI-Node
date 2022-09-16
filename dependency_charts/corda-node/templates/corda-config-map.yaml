@@ -8,6 +8,7 @@ data:
     triplestore.protocol=http
     triplestore.host={{ .Values.graphdb.host }}
     triplestore.port={{ .Values.graphdb.port }}
+    triplestore.private-repository={{ .Values.graphdb.privateRepository }}
     triplestore.repository=federated-shacl
   {{ end -}}
   node.conf: |-
