@@ -72,8 +72,8 @@ corda-client-api:
     name: andreasdog/corda-client-springboot:0.1.0 # Default image used for applications (change for development)
     pullPolicy: Always
 
-  # Enable supporting GraphDB as configuration file
-  graphdb:
+  # Enable configuration file
+  client:
     tradelens:
       apikey: ""
       orgId: ""

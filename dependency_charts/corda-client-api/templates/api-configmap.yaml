@@ -3,9 +3,6 @@ kind: ConfigMap
 metadata:
   name: {{ template "corda-client-api.fullname" $ }}-config
 data:
-  {{- if .Values.graphdb.enabled }}
   database.properties: |-
-    tradelens.apikey={{ .Values.graphdb.tradelens.apikey }}
-    tradelens.orgId={{ .Values.graphdb.tradelens.orgId }}
-
-  {{ end -}}
+    tradelens.apikey={{ .Values.client.tradelens.apikey }}
+    tradelens.orgId={{ .Values.client.tradelens.orgId }}

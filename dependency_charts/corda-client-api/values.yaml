@@ -8,7 +8,7 @@ service:
   port: 10050
   type: ClusterIP
 
-graphdb:
+client:
   tradelens:
     apikey: ""
     orgId: ""
