@@ -15,3 +15,6 @@ dependencies:
   - name: graphdb
     version: 0.2.0-local
     repository: file://dependency_charts/graphdb
+  - name: semantic-adapter
+    version: 0.2.0-local
+    repository: file://dependency_charts/semantic-adapter

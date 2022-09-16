@@ -107,3 +107,15 @@ graphdb:
   # Custom resources in Kubernetes may be defined here. See templates for more details. 
   resources: {}
 
+
+# Supporting GraphDB configuration
+semantic-adapter:
+  enabled: true
+
+  # Service type and port set for the semantic adapter instance.
+  service:
+    type: ClusterIP
+    port: 80
+
+  # Custom resources in Kubernetes may be defined here. See templates for more details.
+  resources: {}
