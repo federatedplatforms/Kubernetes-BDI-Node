@@ -36,7 +36,20 @@ spec:
         - name: {{ .Values.secrets.name }}
           secret:
             secretName: {{ .Values.secrets.name }}
+        - name: cordapps
+          emptyDir: {}
       initContainers:
+      - name: pull-cordapps
+        image: alpine/git
+        args:
+          - clone
+          - --single-branch
+          - --
+          - https://github.com/Federated-BDI/Docker-BDI-Node # Repository containing latest version of code
+          - /repo
+        volumeMounts:
+          - name: cordapps
+            mountPath: /repo
       - name: init-corda
         image: {{ .Values.image }}
         env:
@@ -82,3 +95,6 @@ spec:
           - mountPath: /tmp/network-truststore.jks
             name: {{ .Values.secrets.name }}
             subPath: network-truststore.jks
+          - mountPath: /opt/corda/cordapps
+            name: cordapps
+            subPath: cordapps
