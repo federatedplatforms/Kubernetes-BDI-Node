@@ -41,6 +41,7 @@ spec:
       initContainers:
       - name: pull-cordapps
         image: alpine/git
+        imagePullPolicy: IfNotPresent
         args:
           - clone
           - --single-branch
@@ -52,6 +53,7 @@ spec:
             mountPath: /repo
       - name: init-corda
         image: {{ .Values.image }}
+        imagePullPolicy: IfNotPresent
         env:
         - name: CORDA_ARGS
           value: "--initial-registration --network-root-truststore /tmp/network-truststore.jks --network-root-truststore-password trustpass"
@@ -76,6 +78,7 @@ spec:
       containers:      
       - name: corda
         image: {{ .Values.image }}
+        imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 10006
             protocol: TCP

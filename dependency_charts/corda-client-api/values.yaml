@@ -1,6 +1,6 @@
 image:
   name: andreasdog/corda-client-springboot:0.1.0
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 enabled: true
 
@@ -12,6 +12,16 @@ client:
   tradelens:
     apikey: ""
     orgId: ""
+  semanticadapter:
+    protocol: http
+    host: namespace-semantic-adapter
+    port: 1337
+    path: tradelens-events
+  graphdb:
+    host: namespace-graphdb
+    port: 7200
+    privateRepository: private
+    repository: federated-shacl
 
 ingress:
   enabled: false

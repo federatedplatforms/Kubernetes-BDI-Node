@@ -9,7 +9,7 @@ data:
     triplestore.host={{ .Values.graphdb.host }}
     triplestore.port={{ .Values.graphdb.port }}
     triplestore.private-repository={{ .Values.graphdb.privateRepository }}
-    triplestore.repository=federated-shacl
+    triplestore.repository={{ .Values.graphdb.repository }}
   {{ end -}}
   node.conf: |-
    {{ tpl .Values.nodeConf $ | nindent 4}}

@@ -9,6 +9,7 @@ replicaCount: 1
 
 image:
   # repository: nginx
+  name: tystnad/semantic-adapter:tl-0.1
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   # tag: ""
@@ -32,7 +33,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 7200
+  port: 1337
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
