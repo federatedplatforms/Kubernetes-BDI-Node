@@ -52,6 +52,13 @@ For example,
 helm upgrade --install -n bdi-node --create-namespace bdi-node .
 ```
 
+- Use Port-Forwarding with `kubectl` to open a connection to the GraphDB database.
+For example, the port-forwarding command might look like (run in Command prompt in the correct kube-context):
+
+```
+kubectl -n DEPLOYMENT_NAMESPACE port-forward svc/DEPLOYMENT_NAME-graphdb 7200:7200
+```
+A repository must be initiated in the GraphDB container, with the name defined in the `corda-node.graphdb.repository` key in the `values.yaml` file and default config parameters.
 
 ### Uninstallation 
 - Run the following script to clear all deployed resources. 
@@ -98,8 +105,6 @@ Try to submit the following new events.
 ```
 You can also send these events to other nodes, by entering their country code in the `countriesInvolved` list. To do this, the nodes need to be able to communicate on the p2p address configured in `node.conf`.
 
-## Future updates
-- Support deployment of node as Notary
-
 ## Note
-The provided Helm scripts are provided in a rough state and may change.
+- The provided Helm scripts are provided in a rough state and may change.
+- Currently the steps to designate a node as a Notary are manually done through the command-line as described in the official Corda node documentation. Due to limitations of Kubernetes, we do not provide an automated way to set up a Notary.
