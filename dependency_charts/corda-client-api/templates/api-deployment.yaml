@@ -23,6 +23,10 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: {{ template "corda-client-api.fullname" $ }}-config
+          configMap:
+            name: {{ template "corda-client-api.fullname" $ }}-config
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.image.name }}
@@ -46,6 +50,10 @@ spec:
             - name: http
               containerPort: {{ .Values.configmap.server.port }}
               protocol: TCP
+          volumeMounts:
+            - mountPath: /database.properties
+              name: {{ template "corda-node.fullname" $ }}-config
+              subPath: database.properties
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
 {{ end -}}

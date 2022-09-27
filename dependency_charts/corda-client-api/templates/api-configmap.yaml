@@ -1,0 +1,19 @@
+{{- if .Values.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "corda-client-api.fullname" $ }}-config
+data:
+  database.properties: |-
+    tradelens.apikey={{ .Values.client.tradelens.apikey }}
+    tradelens.orgId={{ .Values.client.tradelens.orgId }}
+    semanticadapter.protocol={{ .Values.client.semanticadapter.protocol }}
+    semanticadapter.host={{ .Values.client.semanticadapter.host }}
+    semanticadapter.port={{ .Values.client.semanticadapter.port }}
+    semanticadapter.path={{ .Values.client.semanticadapter.path }}
+    triplestore.protocol=http
+    triplestore.host={{ .Values.client.graphdb.host }}
+    triplestore.port={{ .Values.client.graphdb.port }}
+    triplestore.private-repository={{ .Values.client.graphdb.privateRepository }}
+    triplestore.repository={{ .Values.client.graphdb.repository }}
+{{ end -}}

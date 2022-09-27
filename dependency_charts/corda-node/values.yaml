@@ -10,8 +10,10 @@ service:
 
 graphdb:
   enabled: true
-  host: default-host-name
+  host: namespace-graphdb
   port: 7200
+  privateRepository: private
+  repository: federated-shacl
 
 image: corda/corda-zulu-java1.8-4.5.8:latest
 nodeConf: |-

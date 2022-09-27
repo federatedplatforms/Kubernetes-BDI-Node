@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: 1.16.0
+description: A Helm chart for running the Semantic Adapter for a Corda BDI Node
+name: semantic-adapter
+type: application
+version: 0.2.0-local
