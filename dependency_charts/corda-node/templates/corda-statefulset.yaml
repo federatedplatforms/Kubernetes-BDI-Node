@@ -8,12 +8,19 @@ spec:
   replicas: 1
   volumeClaimTemplates:
     - metadata:
-        name: {{ template "corda-node.fullname" $ }}-pv
+        name: {{ template "corda-node.fullname" $ }}-cert-pv
       spec:
         accessModes: [ "ReadWriteOnce" ]
         resources:
           requests:
-            storage: 8Gi  
+            storage: 4Gi  
+    - metadata:
+        name: {{ template "corda-node.fullname" $ }}-persist-pv
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 4Gi  
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ template "corda-node.fullname" $ }}-corda
@@ -66,7 +73,9 @@ spec:
             name: p2p
         volumeMounts:
           - mountPath: "/opt/corda/certificates"
-            name: {{ template "corda-node.fullname" $ }}-pv
+            name: {{ template "corda-node.fullname" $ }}-cert-pv
+          - mountPath: "/opt/corda/persistence"
+            name: {{ template "corda-node.fullname" $ }}-persist-pv
           - mountPath: /etc/corda/node.conf
             name: {{ template "corda-node.fullname" $ }}-config
             subPath: node.conf
@@ -88,7 +97,9 @@ spec:
             name: p2p
         volumeMounts:
           - mountPath: "/opt/corda/certificates"
-            name: {{ template "corda-node.fullname" $ }}-pv
+            name: {{ template "corda-node.fullname" $ }}-cert-pv
+          - mountPath: "/opt/corda/persistence"
+            name: {{ template "corda-node.fullname" $ }}-persist-pv
           - mountPath: /etc/corda/node.conf
             name: {{ template "corda-node.fullname" $ }}-config
             subPath: node.conf
