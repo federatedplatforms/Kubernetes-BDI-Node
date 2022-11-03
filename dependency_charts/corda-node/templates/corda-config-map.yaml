@@ -11,6 +11,37 @@ data:
     triplestore.private-repository={{ .Values.graphdb.privateRepository }}
     triplestore.repository={{ .Values.graphdb.repository }}
   {{ end -}}
-  node.conf: |-
-   {{ tpl .Values.nodeConf $ | nindent 4}}
+  node.conf: |-   
+    devMode={{ .Values.devMode }}
+    myLegalName={{ .Values.myLegalName | quote }}
+    {{- if .Values.notary.isNotary  }}
+    notary = [validating : {{ .Values.notary.isValidating }}]
+    {{- end }}
+    p2pAddress={{ printf "%s:%v" .Values.p2pAddress .Values.p2pPort | quote }}
+    rpcSettings {
+        address={{ printf "%s:%v" .Values.rpc.address .Values.rpcPort | quote }}
+        adminAddress={{ printf "%s:%v" .Values.rpc.adminAddress .Values.adminPort | quote }}
+    }
+    security {
+        authService {
+            dataSource {
+                type={{ .Values.security.datasourceType }}
+                users=[
+                  {{- range $.Values.security.users }}
+                    {
+                        password={{ .password }}
+                        permissions=[
+                            {{- range .permissions }}
+                            {{ . }}
+                            {{- end }}
+                        ]
+                        user={{ .user }}
+                    }
+                  {{- end }}
+                ]
+            }
+        }
+    }
+    devModeOptions.allowCompatibilityZone={{ .Values.compatibilityZone.enabled }}
+    compatibilityZoneURL={{ .Values.compatibilityZone.compatibilityZoneURL | quote }}
  
