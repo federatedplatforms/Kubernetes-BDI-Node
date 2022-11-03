@@ -4,9 +4,6 @@ annotations: {}
 
 service:
   type: LoadBalancer
-  loadBalancerIP: 127.0.0.1 # Default value that shouldn't work. Follow instructions in main chart file.
-  p2pPort: 10005
-  rpcPort: 10006
 
 graphdb:
   enabled: true
