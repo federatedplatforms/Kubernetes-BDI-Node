@@ -9,15 +9,15 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
 {{- if eq .Values.service.type "LoadBalancer" }}
-  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.p2pAddress }}
 {{- end }}
   ports:
-    - port: {{ .Values.service.p2pPort }}
-      targetPort: {{ .Values.service.p2pPort }}
+    - port: {{ .Values.p2pPort }}
+      targetPort: {{ .Values.p2pPort }}
       protocol: TCP
       name: p2p
-    - port: {{ .Values.service.rpcPort }}
-      targetPort: {{ .Values.service.rpcPort }}
+    - port: {{ .Values.rpcPort }}
+      targetPort: {{ .Values.rpcPort }}
       protocol: TCP
       name: rpc
   selector:
