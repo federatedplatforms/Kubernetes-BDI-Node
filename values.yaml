@@ -28,32 +28,28 @@ corda-node:
 
   # Node configuration. Replace the IP address (127.0.0.1) for P2P with the pre-instantiated Azure Public IP Address.
   # Also, update nodeConf as required with the appropriate values.
-  nodeConf: |-
-    devMode=true
-    myLegalName="O=TNO,L=Manila,C=ML,OU=ICT"
-    p2pAddress="127.0.0.1:10005"
-    rpcSettings {
-        address="0.0.0.0:10006"
-        adminAddress="0.0.0.0:10046"
-    }
-    security {
-        authService {
-            dataSource {
-                type=INMEMORY
-                users=[
-                    {
-                        password=vzzuABeCut3jGoJfEp94
-                        permissions=[
-                            ALL
-                        ]
-                        user=user1
-                    }
-                ]
-            }
-        }
-    }
-    devModeOptions.allowCompatibilityZone=true
-    compatibilityZoneURL="https://nms.k8s.basicdatasharinginfrastructure.net"
+  notary:
+  isNotary: false
+  isValidating: false
+  devMode: true
+  myLegalName: O=TNO,L=Manila,C=ML,OU=ICT
+  p2pAddress: 127.0.0.1 # Default value that shouldn't work. Follow instructions in main chart file.
+  p2pPort: 10005
+  rpcPort: 10006
+  adminPort: 10046
+  rpc:
+    address: 0.0.0.0
+    adminAddress: 0.0.0.0
+  security:
+    datasourceType: INMEMORY
+    users:
+      - password: vzzuABeCut3jGoJfEp94
+        user: user1
+        permissions:
+          - ALL
+  compatibilityZone:
+    enabled: true
+    compatibilityZoneURL: https://nms.k8s.basicdatasharinginfrastructure.net
   secrets:
     create: true
     name: corda-secrets
