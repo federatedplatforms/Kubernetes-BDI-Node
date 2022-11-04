@@ -26,8 +26,8 @@ corda-node:
   # Node configuration. Replace the IP address (127.0.0.1) for P2P with the pre-instantiated Azure Public IP Address.
   # Also, update nodeConf as required with the appropriate values.
   notary:
-  isNotary: false
-  isValidating: false
+    isNotary: false
+    isValidating: false
   devMode: true
   myLegalName: O=TNO,L=Manila,C=ML,OU=ICT
   p2pAddress: 127.0.0.1 # Default value that shouldn't work. Follow instructions in main chart file.
