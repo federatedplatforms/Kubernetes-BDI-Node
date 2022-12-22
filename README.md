@@ -1,4 +1,4 @@
-# Kubernetes BDI Node (In progress)
+# Kubernetes BDI Node
 
 Helm scripts for deploying BDI node on a Kubernetes cluster with/without GraphDB and/or Corda Client API
 
