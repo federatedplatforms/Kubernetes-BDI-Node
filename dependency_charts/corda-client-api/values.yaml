@@ -12,11 +12,6 @@ client:
   tradelens:
     apikey: ""
     orgId: ""
-  semanticadapter:
-    protocol: http
-    host: namespace-semantic-adapter
-    port: 1337
-    path: tradelens-events
   graphdb:
     host: namespace-graphdb
     port: 7200

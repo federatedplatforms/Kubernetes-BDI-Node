@@ -18,7 +18,7 @@ corda-node:
     privateRepository: private
     repository: bdi
 
-  image: tystnad/corda-zulu-java1.8-4.5.8:latest # Contains 0 contracts.
+  image: corda/community:4.9.2-zulu-openjdk8:latest # Contains 0 contracts.
   # Contracts are currently pulled from the public Docker-BDI-Node repository, and mounted at 
   # /opt/corda/cordapps/. This may be made customizable in a subsequent release.
   # (See template for details)
@@ -65,7 +65,7 @@ corda-client-api:
   
   # Image values
   image:
-    name: tystnad/corda-client-springboot:0.1.8 # Default image used for applications (change for development)
+    name: chirvasutatc/bdi-api:0.1 # Default image used for applications (change for development)
     pullPolicy: Always
 
   # Configuration parameters
@@ -74,11 +74,6 @@ corda-client-api:
     tradelens:
       apikey: "test"
       orgId: "test"
-    semanticadapter:
-      protocol: http
-      host: $HELM_DEPLOYMENT_NAME-semantic-adapter
-      port: 1337
-      path: tradelens # Fixed endpoint
     graphdb:
       host: $HELM_DEPLOYMENT_NAME-graphdb
       port: 7200
@@ -120,22 +115,4 @@ graphdb:
     port: 7200
 
   # Custom resources in Kubernetes may be defined here. See templates for more details. 
-  resources: {}
-
-
-# Supporting GraphDB configuration
-semantic-adapter:
-  enabled: true
-
-  # Image names
-  image:
-    name: tystnad/semantic-adapter:tl-0.5
-    pullPolicy: IfNotPresent
-
-  # Service type and port set for the semantic adapter instance.
-  service:
-    type: ClusterIP
-    port: 1337
-
-  # Custom resources in Kubernetes may be defined here. See templates for more details.
   resources: {}
