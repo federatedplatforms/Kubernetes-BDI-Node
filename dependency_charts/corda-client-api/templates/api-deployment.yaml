@@ -33,10 +33,10 @@ spec:
           args:
             - /bin/bash
             - -c
-            - sleep 40 && java -Dserver.port=$springPort -Dconfig.rpc.host=$cordaHost -Dconfig.rpc.port=$cordaPort -Dconfig.rpc.username=$cordaUser -Dconfig.rpc.password=$cordaPassword -jar clients.jar
+            - java -Dserver.port=$springPort -Dconfig.rpc.host=$cordaHost -Dconfig.rpc.port=$cordaPort -Dconfig.rpc.username=$cordaUser -Dconfig.rpc.password=$cordaPassword -jar api.jar
           env:
             - name: cordaHost
-              value: {{ .Values.configmap.config.rpc.host }}
+              value: "{{ .Release.Name }}-corda-node"
             - name: cordaPort
               value: "{{ .Values.configmap.config.rpc.port }}"
             - name: cordaUser

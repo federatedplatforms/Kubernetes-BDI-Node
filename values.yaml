@@ -13,12 +13,11 @@ corda-node:
   # Comment the following 4 lines if GraphDB will not be enabled in the following configuration!
   graphdb:
     enabled: true # Enable if enabled below.
-    host: $HELM_DEPLOYMENT_NAME-graphdb
     port: 7200 # Use port defined below.
     privateRepository: private
     repository: bdi
 
-  image: corda/community:4.9.2-zulu-openjdk8:latest # Contains 0 contracts.
+  image: corda/community:4.9.2-zulu-openjdk8 # Contains 0 contracts.
   # Contracts are currently pulled from the public Docker-BDI-Node repository, and mounted at 
   # /opt/corda/cordapps/. This may be made customizable in a subsequent release.
   # (See template for details)
@@ -55,13 +54,14 @@ corda-node:
 
 # Corda Client API Configuration
 corda-client-api:
+
   # Whether or not the accompanying Spring Boot client API instance is deployed
   enabled: true
 
   # Service type and port set for the Spring Boot API.
   service:
     type: ClusterIP
-    port: 10050
+    port: &serverPort 10050
   
   # Image values
   image:
@@ -75,10 +75,10 @@ corda-client-api:
       apikey: "test"
       orgId: "test"
     graphdb:
-      host: $HELM_DEPLOYMENT_NAME-graphdb
+      # host: -graphdb
       port: 7200
       privateRepository: private
-      repository: federated-shacl
+      repository: bdi
 
 
   # Enable ingress on the image (default parameters, see template for details)
@@ -86,19 +86,18 @@ corda-client-api:
     enabled: true
     # Replace with hostname you wish to use (see template for details). 
     # TLS is automatically added, if LetsEncrypt ClusterIssuer is configured for the cluster.
-    host: $HOSTNAME
-
+    # host: hostname
 
   # Configuration used for the server.
   configmap:
     # Server Port (Use same as above!)
     server:
-      port: 10050
+      port: *serverPort
     
     # Access information for the Corda Node (Use same as in the Corda configuration above!)
     config:
       rpc:
-        host: $HELM_DEPLOYMENT_NAME-corda-node # Replace with the same name used for the deployment.
+        #host: "corda-host" # Replace with the same name used for the deployment.
         port: 10006
         username: user1
         password: vzzuABeCut3jGoJfEp94

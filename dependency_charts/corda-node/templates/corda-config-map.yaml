@@ -6,7 +6,7 @@ data:
   {{- if .Values.graphdb.enabled }}
   database.properties: |-
     triplestore.protocol=http
-    triplestore.host={{ .Values.graphdb.host }}
+    triplestore.host={{ .Release.Name }}-graphdb
     triplestore.port={{ .Values.graphdb.port }}
     triplestore.private-repository={{ .Values.graphdb.privateRepository }}
     triplestore.repository={{ .Values.graphdb.repository }}
