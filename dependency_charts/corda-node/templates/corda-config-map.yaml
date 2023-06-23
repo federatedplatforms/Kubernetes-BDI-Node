@@ -3,21 +3,34 @@ kind: ConfigMap
 metadata:
   name: {{ template "corda-node.fullname" $ }}-config
 data:
+  ishare.properties: |-
+    ishare.EORI=eori
+    ishare.key=key
+    ishare.cert=cert
+    ishare.pass=nvt
+    ishare.schemeURL=https://scheme.isharetest.net
+    ishare.schemeID=schemeid
+    ishare.enabled=false
   {{- if .Values.graphdb.enabled }}
   database.properties: |-
-    triplestore.protocol=http
+    graphdb.sparql.url=http://{{ .Release.Name }}-graphdb:7200/repositories/bdi
     triplestore.host={{ .Release.Name }}-graphdb
     triplestore.port={{ .Values.graphdb.port }}
     triplestore.private-repository={{ .Values.graphdb.privateRepository }}
     triplestore.repository={{ .Values.graphdb.repository }}
+    triplestore.connectTimeoutMillis=10000
+    triplestore.socketTimeoutMillis=30000
+    triplestore.maxConnectionsPerRoute=50
+    triplestore.maxConnectionsTotal=100
+    triplestore.protocol=http
   {{ end -}}
   node.conf: |-   
     devMode={{ .Values.devMode }}
-    myLegalName={{ .Values.myLegalName | quote }}
+    myLegalName="O={{ .Release.Name | upper }},L=Frankfurt,C=DE,OU=IATA"
     {{- if .Values.notary.isNotary  }}
     notary = [validating : {{ .Values.notary.isValidating }}]
     {{- end }}
-    p2pAddress={{ printf "%s:%v" .Values.p2pAddress .Values.p2pPort | quote }}
+    p2pAddress="{{ .Release.Name }}-corda-node:{{ .Values.p2pPort }}"
     rpcSettings {
         address={{ printf "%s:%v" .Values.rpc.address .Values.rpcPort | quote }}
         adminAddress={{ printf "%s:%v" .Values.rpc.adminAddress .Values.adminPort | quote }}
