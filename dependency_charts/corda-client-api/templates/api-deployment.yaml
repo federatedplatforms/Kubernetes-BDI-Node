@@ -33,27 +33,25 @@ spec:
           args:
             - /bin/bash
             - -c
-            - java -Dserver.port=$springPort -Dconfig.rpc.host=$cordaHost -Dconfig.rpc.port=$cordaPort -Dconfig.rpc.username=$cordaUser -Dconfig.rpc.password=$cordaPassword -jar api.jar
+            - java -Dserver.port=$springPort -Dcorda.rpc.host=$cordaHost -Dcorda.rpc.port=$cordaPort -Dcorda.rpc.username=$cordaUser -Dcorda.rpc.password=$cordaPassword -Dgraphdb.sparql.url=$graphdbSparqlUrl -jar api.jar
           env:
             - name: cordaHost
               value: "{{ .Release.Name }}-corda-node"
             - name: cordaPort
-              value: "{{ .Values.configmap.config.rpc.port }}"
+              value: "{{ .Values.configmap.corda.rpc.port }}"
             - name: cordaUser
-              value: {{ .Values.configmap.config.rpc.username }}
+              value: {{ .Values.configmap.corda.rpc.username }}
             - name: cordaPassword
-              value: {{ .Values.configmap.config.rpc.password }}
+              value: {{ .Values.configmap.corda.rpc.password }}
             - name: springPort
               value: "{{ .Values.configmap.server.port }}"
+            - name: graphdbSparqlUrl
+              value: "http://{{ .Release.Name }}-graphdb:7200/repositories/bdi"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
               containerPort: {{ .Values.configmap.server.port }}
               protocol: TCP
-          volumeMounts:
-            - mountPath: /database.properties
-              name: {{ template "corda-node.fullname" $ }}-config
-              subPath: database.properties
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
 {{ end -}}
