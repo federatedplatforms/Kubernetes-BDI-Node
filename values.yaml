@@ -65,15 +65,12 @@ corda-client-api:
   
   # Image values
   image:
-    name: chirvasutatc/bdi-api:0.1 # Default image used for applications (change for development)
+    name: federatedbdi/bdi-api:0.3 # Default image used for applications (change for development)
     pullPolicy: Always
 
   # Configuration parameters
   # Replace the $HELM_DEPLOYMENT_NAME with the values you used for the deployment
   client:
-    tradelens:
-      apikey: "test"
-      orgId: "test"
     graphdb:
       # host: -graphdb
       port: 7200
@@ -95,7 +92,7 @@ corda-client-api:
       port: *serverPort
     
     # Access information for the Corda Node (Use same as in the Corda configuration above!)
-    config:
+    corda:
       rpc:
         #host: "corda-host" # Replace with the same name used for the deployment.
         port: 10006
