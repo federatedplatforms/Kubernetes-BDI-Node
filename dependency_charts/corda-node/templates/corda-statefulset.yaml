@@ -40,9 +40,9 @@ spec:
         - name: {{ template "corda-node.fullname" $ }}-config
           configMap:
             name: {{ template "corda-node.fullname" $ }}-config
-        - name: {{ .Values.secrets.name }}
+        - name: {{ .Release.Name }}-{{ .Values.secrets.name }}
           secret:
-            secretName: {{ .Values.secrets.name }}
+            secretName: {{ .Release.Name }}-{{ .Values.secrets.name }}
         - name: cordapps
           emptyDir: {}
       initContainers:
@@ -53,7 +53,7 @@ spec:
           - clone
           - --single-branch
           - --
-          - https://github.com/Federated-BDI/Docker-BDI-Node # Repository containing latest version of code
+          - https://github.com/soudmaijer/Docker-BDI-Node # TODO should move to FEDeRATED repo. Repository containing latest version of code
           - /repo
         volumeMounts:
           - name: cordapps
@@ -80,7 +80,7 @@ spec:
             name: {{ template "corda-node.fullname" $ }}-config
             subPath: node.conf
           - mountPath: /tmp/network-truststore.jks
-            name: {{ .Values.secrets.name }}
+            name: {{ .Release.Name }}-{{ .Values.secrets.name }}
             subPath: network-truststore.jks
         securityContext:
           allowPrivilegeEscalation: false
@@ -106,9 +106,12 @@ spec:
           - mountPath: /opt/corda/database.properties
             name: {{ template "corda-node.fullname" $ }}-config
             subPath: database.properties
+          - mountPath: /opt/corda/ishare.properties
+            name: {{ template "corda-node.fullname" $ }}-config
+            subPath: ishare.properties
           - mountPath: /tmp/network-truststore.jks
-            name: {{ .Values.secrets.name }}
+            name: {{ .Release.Name }}-{{ .Values.secrets.name }}
             subPath: network-truststore.jks
           - mountPath: /opt/corda/cordapps
             name: cordapps
-            subPath: cordapps
+            subPath: corda/cordapps
