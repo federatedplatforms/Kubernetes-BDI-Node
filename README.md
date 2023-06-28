@@ -29,10 +29,14 @@ There are different approaches that exist to direct Level 4 traffic towards the 
 
 ### Configuration
 
-- Edit values.yaml as per the documentation provided. Replace all the marked values with appropriate
-    - (For Azure) For the Corda Node, use the Public IP Address created above.
-    - Enable the GraphDB and/or Spring API deployment as needed, based on the key 'enabled' for each block in the `values.yaml` file in the root directory.
-    - The Corda Client API Ingress hostname must be configured as required. If the LetsEncrypt ClusterIssuer has been deployed, then TLS will automatically be generated and configured. (See template for details). By default, it is enabled for easy viewing.
+- Preferred way is to create a values override file for a specific purpose. Then run helm upgrade using two value files. For example: 
+```
+helm upgrade --install -n namespace -f values.yaml -f specific-values.yaml name
+```
+- If needed, edit values.yaml as per the documentation provided. Replace all the marked values with appropriate
+- (For Azure) For the Corda Node, use the Public IP Address created above.
+- Enable the GraphDB and/or Spring API deployment as needed, based on the key 'enabled' for each block in the `values.yaml` file in the root directory.
+- The Corda Client API Ingress hostname must be configured as required. If the LetsEncrypt ClusterIssuer has been deployed, then TLS will automatically be generated and configured. (See template for details). By default, it is enabled for easy viewing.
 
 ### Installation
 
