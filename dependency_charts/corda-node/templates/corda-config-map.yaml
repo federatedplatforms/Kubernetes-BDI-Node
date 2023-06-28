@@ -26,7 +26,7 @@ data:
   {{ end -}}
   node.conf: |-   
     devMode={{ .Values.devMode }}
-    myLegalName="O={{ .Release.Name | upper }},L=Frankfurt,C=DE,OU=IATA"
+    myLegalName="{{ .Values.myLegalName }}"
     {{- if .Values.notary.isNotary  }}
     notary = [validating : {{ .Values.notary.isValidating }}]
     {{- end }}
