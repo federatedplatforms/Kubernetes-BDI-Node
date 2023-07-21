@@ -8,6 +8,7 @@ enabled: true
 replicaCount: 1
 
 image:
+  name: khaller/graphdb-free:10.2.1
   # repository: nginx
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.

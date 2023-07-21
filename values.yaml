@@ -65,7 +65,7 @@ corda-client-api:
   
   # Image values
   image:
-    name: federatedbdi/bdi-api:0.3.1 # Default image used for applications (change for development)
+    name: federatedbdi/bdi-api:0.3.4 # Default image used for applications (change for development)
     pullPolicy: Always
 
   # Configuration parameters
@@ -104,6 +104,9 @@ corda-client-api:
 graphdb:
   # Whether an accompanying GraphDB instance is deployed.
   enabled: true
+
+  image:
+    name: khaller/graphdb-free:10.2.1
 
   # Service type and port set for the GraphDB instance.
   service:

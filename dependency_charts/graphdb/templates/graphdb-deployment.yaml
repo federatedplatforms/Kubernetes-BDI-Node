@@ -25,7 +25,7 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          image: khaller/graphdb-free:10.2.1
+          image: {{ .Values.image.name }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
