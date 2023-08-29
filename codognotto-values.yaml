@@ -9,6 +9,6 @@ corda-client-api:
         distribution:
           rules:
             list: static
-          static:
-            # Comma separated list of static destinations, all events will be sent to the locations specified here.
-            destinations: DCA/Schiphol/NL
+            static:
+              # Comma separated list of static destinations, all events will be sent to the locations specified here.
+              destinations: DCA/Schiphol/NL
