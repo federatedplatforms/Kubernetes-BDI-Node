@@ -30,3 +30,12 @@ configmap:
   graphdb:
     sparql:
       url: http://localhost:7200/repositories/bdi
+  bdi:
+    event:
+      distribution:
+        rules:
+          # options: broadcast, static
+          list: broadcast
+        #static:
+          # Comma separated list of static destinations, all events will be sent to the locations specified here.
+          #destinations: DCA/Schiphol/NL

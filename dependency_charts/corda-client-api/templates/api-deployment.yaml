@@ -33,7 +33,7 @@ spec:
           args:
             - /bin/bash
             - -c
-            - java -Dserver.port=$springPort -Dcorda.rpc.host=$cordaHost -Dcorda.rpc.port=$cordaPort -Dcorda.rpc.username=$cordaUser -Dcorda.rpc.password=$cordaPassword -Dgraphdb.sparql.url=$graphdbSparqlUrl -jar api.jar
+            - java -Dserver.port=$springPort -Dcorda.rpc.host=$cordaHost -Dcorda.rpc.port=$cordaPort -Dcorda.rpc.username=$cordaUser -Dcorda.rpc.password=$cordaPassword -Dgraphdb.sparql.url=$graphdbSparqlUrl -Dbdi.event.distribution.rules.list=$bdiEventDistributionRulesList -Dbdi.event.distribution.rules.static.destinations=$bdiEventDistributionRulesStaticDestinations -jar api.jar
           env:
             - name: cordaHost
               value: "{{ .Release.Name }}-corda-node"
@@ -47,6 +47,10 @@ spec:
               value: "{{ .Values.configmap.server.port }}"
             - name: graphdbSparqlUrl
               value: "http://{{ .Release.Name }}-graphdb:7200/repositories/bdi"
+            - name: bdiEventDistributionRulesList
+              value: "{{ .Values.configmap.bdi.event.distribution.rules.list }}"
+            - name: bdiEventDistributionRulesStaticDestinations
+              value: "{{ .Values.configmap.bdi.event.distribution.rules.static.destinations }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
