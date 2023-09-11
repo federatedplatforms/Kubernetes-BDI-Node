@@ -7,6 +7,10 @@ enabled: true
 
 replicaCount: 1
 
+ingress:
+  enabled: false
+  host: graphdb.local
+
 image:
   name: khaller/graphdb-free:10.2.1
   # repository: nginx

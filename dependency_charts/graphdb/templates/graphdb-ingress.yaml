@@ -1,0 +1,28 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    {{- include "graphdb.labels" . | nindent 4 }}
+  name: {{ include "graphdb.fullname" . }}
+  annotations:
+      kubernetes.io/ingress.class: nginx
+      cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  tls:
+    - hosts:
+        - graphdb.{{ .Release.Name }}.k8s.basicdatasharinginfrastructure.net
+      secretName: {{ include "graphdb.fullname" . }}-tls
+  rules:
+  - host: graphdb.{{ .Release.Name }}.k8s.basicdatasharinginfrastructure.net
+    http:
+      paths:
+        - path: /
+          # rewriteTarget: /$1
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ .Release.Name }}-graphdb
+              port:
+                number: {{ .Values.client.graphdb.port }}
+{{ end -}}

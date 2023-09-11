@@ -12,7 +12,6 @@ spec:
   tls:
     - hosts:
         - {{ .Release.Name }}.k8s.basicdatasharinginfrastructure.net
-        - graphdb.{{ .Release.Name }}.k8s.basicdatasharinginfrastructure.net
       secretName: {{ include "corda-client-api.fullname" . }}-tls
   rules:
   - host: {{ .Release.Name }}.k8s.basicdatasharinginfrastructure.net
@@ -26,15 +25,4 @@ spec:
             name: {{ include "corda-client-api.fullname" . }}
             port:
               number: {{ .Values.service.port }}
-  - host: graphdb.{{ .Release.Name }}.k8s.basicdatasharinginfrastructure.net
-    http:
-      paths:
-        - path: /
-          # rewriteTarget: /$1
-          pathType: Prefix
-          backend:
-            service:
-              name: {{ .Release.Name }}-graphdb
-              port:
-                number: {{ .Values.client.graphdb.port }}
 {{ end -}}
