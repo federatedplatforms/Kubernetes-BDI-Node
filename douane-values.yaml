@@ -1,4 +1,12 @@
 
 corda-node:
 
+  service:
+    type: LoadBalancer
+    loadBalancerIP: 20.31.101.154 # Replace with pre-instantiated Azure Public IP Address
+
+  p2pPort: 10005
+  rpcPort: 10006
+  p2pAddress: 20.31.101.154
+
   myLegalName: OU=BDI,O=DCA,L=Schiphol,C=NL

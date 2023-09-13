@@ -30,7 +30,7 @@ data:
     {{- if .Values.notary.isNotary  }}
     notary = [validating : {{ .Values.notary.isValidating }}]
     {{- end }}
-    p2pAddress="{{ .Release.Name }}-corda-node:{{ .Values.p2pPort }}"
+    p2pAddress={{ printf "%s:%v" .Values.p2pAddress .Values.p2pPort | quote }}
     rpcSettings {
         address={{ printf "%s:%v" .Values.rpc.address .Values.rpcPort | quote }}
         adminAddress={{ printf "%s:%v" .Values.rpc.adminAddress .Values.adminPort | quote }}
