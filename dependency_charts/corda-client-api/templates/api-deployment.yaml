@@ -49,7 +49,7 @@ spec:
               value: "http://{{ .Release.Name }}-graphdb:7200/repositories/bdi"
             - name: bdiEventDistributionRulesList
               value: "{{ .Values.configmap.bdi.event.distribution.rules.list }}"
-            {{- if not .Values.configmap.bdi.event.distribution.rules.static.destinations.nilString }}
+            {{- if ((.Values.configmap.bdi.event.distribution.rules.static).destinations) }}
             - name: bdiEventDistributionRulesStaticDestinations
               value: "{{ .Values.configmap.bdi.event.distribution.rules.static.destinations }}"
             {{- end }}

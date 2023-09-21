@@ -125,3 +125,6 @@ graphdb:
 
   # Custom resources in Kubernetes may be defined here. See templates for more details. 
   resources: {}
+
+  ingress:
+    enabled: true
