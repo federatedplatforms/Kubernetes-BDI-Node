@@ -65,7 +65,7 @@ corda-client-api:
   
   # Image values
   image:
-    name: federatedbdi/bdi-api:0.3.6 # Default image used for applications (change for development)
+    name: federatedbdi/bdi-api:0.3.7 # Default image used for applications (change for development)
     pullPolicy: Always
 
   # Configuration parameters
