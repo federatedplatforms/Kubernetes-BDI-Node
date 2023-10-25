@@ -53,7 +53,7 @@ spec:
           - clone
           - --single-branch
           - --
-          - https://github.com/soudmaijer/Docker-BDI-Node # TODO should move to FEDeRATED repo. Repository containing latest version of code
+          - https://github.com/Federated-BDI/Docker-BDI-Node # Repository containing latest versions of the cordapps
           - /repo
         volumeMounts:
           - name: cordapps
