@@ -30,10 +30,13 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.image.name }}
+          volumeMounts:
+            - name: {{ template "corda-client-api.fullname" $ }}-config
+              mountPath: /opt/api/config
           args:
             - /bin/bash
             - -c
-            - java -Dserver.port=$springPort -Dcorda.rpc.host=$cordaHost -Dcorda.rpc.port=$cordaPort -Dcorda.rpc.username=$cordaUser -Dcorda.rpc.password=$cordaPassword -Dgraphdb.sparql.url=$graphdbSparqlUrl -Dbdi.event.distribution.rules.list=$bdiEventDistributionRulesList -Dbdi.event.distribution.rules.static.destinations=$bdiEventDistributionRulesStaticDestinations -jar api.jar
+            - java -Dspring.config.additional-location=file:/opt/api/config/ -Dserver.port=$springPort -Dcorda.rpc.host=$cordaHost -Dcorda.rpc.port=$cordaPort -Dcorda.rpc.username=$cordaUser -Dcorda.rpc.password=$cordaPassword -Dgraphdb.sparql.url=$graphdbSparqlUrl -Dbdi.event.distribution.rules.list=$bdiEventDistributionRulesList -Dbdi.event.distribution.rules.static.destinations=$bdiEventDistributionRulesStaticDestinations -jar api.jar
           env:
             - name: cordaHost
               value: "{{ .Release.Name }}-corda-node"
