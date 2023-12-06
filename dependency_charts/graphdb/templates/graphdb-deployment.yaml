@@ -23,6 +23,10 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: {{ template "graphdb.fullname" $ }}-config
+          configMap:
+            name: {{ template "graphdb.fullname" $ }}-config
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.image.name }}

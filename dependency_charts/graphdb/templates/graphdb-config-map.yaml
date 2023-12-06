@@ -3,23 +3,23 @@ kind: ConfigMap
 metadata:
   name: {{ template "graphdb.fullname" $ }}-config
 data:
-  {{- if .Values.graphdb.enabled }}
+  {{- if .Values.enabled }}
   config.ttl: |-
-  @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-  @prefix rep: <http://www.openrdf.org/config/repository#>.
-  @prefix sr: <http://www.openrdf.org/config/repository/sail#>.
-  @prefix sail: <http://www.openrdf.org/config/sail#>.
-  @prefix owlim: <http://www.ontotext.com/trree/owlim#>.
-
-  [] a rep:Repository ;
-        rep:repositoryID "{{ .Values.initRepository.repositoryName }}" ;
-        rdfs:label "{{ .Values.initRepository.repositoryName }}" ;
-        rep:repositoryImpl [
-          rep:repositoryType "graphdb:SailRepository";
-          sr:sailImpl [
-            sail:sailType "graphdb:Sail" ;
-            owlim:entity-index-size "100000000" ;
-            owlim:query-limit-results "1000" ;
-          ]
-        ].
+    @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+    @prefix rep: <http://www.openrdf.org/config/repository#>.
+    @prefix sr: <http://www.openrdf.org/config/repository/sail#>.
+    @prefix sail: <http://www.openrdf.org/config/sail#>.
+    @prefix owlim: <http://www.ontotext.com/trree/owlim#>.
+  
+    [] a rep:Repository ;
+          rep:repositoryID "{{ .Values.initRepository.repositoryName }}" ;
+          rdfs:label "{{ .Values.initRepository.repositoryName }}" ;
+          rep:repositoryImpl [
+            rep:repositoryType "graphdb:SailRepository";
+            sr:sailImpl [
+              sail:sailType "graphdb:Sail" ;
+              owlim:entity-index-size "100000000" ;
+              owlim:query-limit-results "1000" ;
+            ]
+          ].
   {{ end -}}

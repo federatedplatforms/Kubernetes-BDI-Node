@@ -1,5 +1,5 @@
 image:
-  name: federatedbdi/bdi-api:0.3.8
+  name: federatedbdi/bdi-api:0.3.9
   pullPolicy: IfNotPresent
 
 enabled: true

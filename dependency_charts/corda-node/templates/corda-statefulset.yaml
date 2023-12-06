@@ -67,10 +67,10 @@ spec:
         volumeMounts:
           - mountPath: "/opt/corda/certificates"
             name: {{ template "corda-node.fullname" $ }}-pv
-            subpath: corda/certificates
+            subPath: certificates
           - mountPath: "/opt/corda/persistence"
             name: {{ template "corda-node.fullname" $ }}-pv
-            subpath: corda/persistence
+            subPath: persistence
           - mountPath: /etc/corda/node.conf
             name: {{ template "corda-node.fullname" $ }}-config
             subPath: node.conf
@@ -93,10 +93,10 @@ spec:
         volumeMounts:
           - mountPath: "/opt/corda/certificates"
             name: {{ template "corda-node.fullname" $ }}-pv
-            subpath: corda/certificates
+            subPath: certificates
           - mountPath: "/opt/corda/persistence"
             name: {{ template "corda-node.fullname" $ }}-pv
-            subpath: corda/persistence
+            subPath: persistence
           - mountPath: /etc/corda/node.conf
             name: {{ template "corda-node.fullname" $ }}-config
             subPath: node.conf
