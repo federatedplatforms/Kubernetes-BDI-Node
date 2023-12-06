@@ -24,7 +24,10 @@ data:
     triplestore.maxConnectionsTotal=100
     triplestore.protocol=http
   {{ end -}}
-  node.conf: |-   
+  node.conf: |-
+    custom = {
+      jvmArgs: [ "-Xmx2G" ]
+    }
     devMode={{ .Values.devMode }}
     myLegalName="{{ .Values.myLegalName }}"
     {{- if .Values.notary.isNotary  }}
