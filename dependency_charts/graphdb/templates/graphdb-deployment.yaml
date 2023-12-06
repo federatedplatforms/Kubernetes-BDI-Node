@@ -33,5 +33,10 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-
+          {{- if .Values.initRepository.enabled }}
+          volumeMounts:
+            - mountPath: /repository.init/{{ .Values.initRepository.repositoryName }}/config.ttl
+              name: {{ template "graphdb.fullname" $ }}-config
+              subPath: config.ttl
+          {{- end }}
 {{ end -}}
