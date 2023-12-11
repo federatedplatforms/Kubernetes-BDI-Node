@@ -6,6 +6,7 @@ metadata:
   labels:
     {{- include "graphdb.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ include "graphdb.fullname" . }}
   replicas: {{ .Values.replicaCount }}
   volumeClaimTemplates:
     - metadata:
@@ -36,22 +37,20 @@ spec:
           configMap:
             name: {{ template "graphdb.fullname" $ }}-config
       containers:
-        - name: {{ .Chart.Name }}
-          image: {{ .Values.image.name }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          volumeMounts:
-            - mountPath: "/opt/graphdb/data"
-              name: { { template "graphdb.fullname" $ } }-pv
-              subPath: data
-            {{- if .Values.initRepository.enabled }}
-            - mountPath: /repository.init/{{ .Values.initRepository.repositoryName }}/config.ttl
-              name: {{ template "graphdb.fullname" $ }}-config
-              subPath: config.ttl
-            {{- end }}
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image.name }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+          - containerPort: {{ .Values.service.port }}
+            protocol: TCP
+            name: http
+        volumeMounts:
+          - mountPath: "/opt/graphdb/data"
+            name: {{ template "graphdb.fullname" $ }}-pv
+            subPath: data
+          {{- if .Values.initRepository.enabled }}
+          - mountPath: /repository.init/{{ .Values.initRepository.repositoryName }}/config.ttl
+            name: {{ template "graphdb.fullname" $ }}-config
+            subPath: config.ttl
+          {{ end -}}
 {{ end -}}
