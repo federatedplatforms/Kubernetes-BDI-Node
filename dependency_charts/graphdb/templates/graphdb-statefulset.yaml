@@ -1,12 +1,20 @@
 {{- if .Values.enabled }}
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "graphdb.fullname" . }}
   labels:
     {{- include "graphdb.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ template "graphdb.fullname" $ }}-pv
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 8Gi
   selector:
     matchLabels:
       {{- include "graphdb.selectorLabels" . | nindent 6 }}
@@ -37,10 +45,13 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if .Values.initRepository.enabled }}
           volumeMounts:
+            - mountPath: "/opt/graphdb/data"
+              name: { { template "graphdb.fullname" $ } }-pv
+              subPath: data
+            {{- if .Values.initRepository.enabled }}
             - mountPath: /repository.init/{{ .Values.initRepository.repositoryName }}/config.ttl
               name: {{ template "graphdb.fullname" $ }}-config
               subPath: config.ttl
-          {{- end }}
+            {{- end }}
 {{ end -}}
