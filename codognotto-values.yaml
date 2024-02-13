@@ -1,0 +1,14 @@
+
+corda-node:
+  myLegalName: OU=BDI,O=Codognotto,L=Rome,C=IT
+
+corda-client-api:
+  configmap:
+    bdi:
+      event:
+        distribution:
+          rules:
+            list: static
+            static:
+              # Comma separated list of static destinations, all events will be sent to the locations specified here.
+              destinations: DCA/Schiphol/NL

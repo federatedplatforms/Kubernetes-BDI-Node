@@ -13,12 +13,11 @@ corda-node:
   # Comment the following 4 lines if GraphDB will not be enabled in the following configuration!
   graphdb:
     enabled: true # Enable if enabled below.
-    host: $HELM_DEPLOYMENT_NAME-graphdb
     port: 7200 # Use port defined below.
     privateRepository: private
     repository: bdi
 
-  image: corda/community:4.9.2-zulu-openjdk8:latest # Contains 0 contracts.
+  image: corda/community:4.9.2-zulu-openjdk8 # Contains 0 contracts.
   # Contracts are currently pulled from the public Docker-BDI-Node repository, and mounted at 
   # /opt/corda/cordapps/. This may be made customizable in a subsequent release.
   # (See template for details)
@@ -29,7 +28,7 @@ corda-node:
     isNotary: false
     isValidating: false
   devMode: true
-  myLegalName: O=TNO,L=Manila,C=ML,OU=ICT
+  myLegalName: OU=DE,O=TNO,L=Den Haag,C=NL
   p2pAddress: 127.0.0.1 # Default value that shouldn't work. Follow instructions in main chart file.
   p2pPort: 10005
   rpcPort: 10006
@@ -55,30 +54,28 @@ corda-node:
 
 # Corda Client API Configuration
 corda-client-api:
+
   # Whether or not the accompanying Spring Boot client API instance is deployed
   enabled: true
 
   # Service type and port set for the Spring Boot API.
   service:
     type: ClusterIP
-    port: 10050
+    port: &serverPort 10050
   
   # Image values
   image:
-    name: chirvasutatc/bdi-api:0.1 # Default image used for applications (change for development)
+    name: federatedbdi/bdi-api:0.3.9 # Default image used for applications (change for development)
     pullPolicy: Always
 
   # Configuration parameters
   # Replace the $HELM_DEPLOYMENT_NAME with the values you used for the deployment
   client:
-    tradelens:
-      apikey: "test"
-      orgId: "test"
     graphdb:
-      host: $HELM_DEPLOYMENT_NAME-graphdb
+      # host: -graphdb
       port: 7200
       privateRepository: private
-      repository: federated-shacl
+      repository: bdi
 
 
   # Enable ingress on the image (default parameters, see template for details)
@@ -86,28 +83,40 @@ corda-client-api:
     enabled: true
     # Replace with hostname you wish to use (see template for details). 
     # TLS is automatically added, if LetsEncrypt ClusterIssuer is configured for the cluster.
-    host: $HOSTNAME
-
+    # host: hostname
 
   # Configuration used for the server.
   configmap:
     # Server Port (Use same as above!)
     server:
-      port: 10050
+      port: *serverPort
     
     # Access information for the Corda Node (Use same as in the Corda configuration above!)
-    config:
+    corda:
       rpc:
-        host: $HELM_DEPLOYMENT_NAME-corda-node # Replace with the same name used for the deployment.
+        #host: "corda-host" # Replace with the same name used for the deployment.
         port: 10006
         username: user1
         password: vzzuABeCut3jGoJfEp94
+
+    bdi:
+      event:
+        distribution:
+          rules:
+            # options: broadcast, static
+            list: broadcast
+            #static:
+              # Comma separated list of static destinations, all events will be sent to the locations specified here.
+              #destinations: DCA/Schiphol/NL
 
 
 # Supporting GraphDB configuration
 graphdb:
   # Whether an accompanying GraphDB instance is deployed.
   enabled: true
+
+  image:
+    name: khaller/graphdb-free:10.2.1
 
   # Service type and port set for the GraphDB instance.
   service:
@@ -116,3 +125,6 @@ graphdb:
 
   # Custom resources in Kubernetes may be defined here. See templates for more details. 
   resources: {}
+
+  ingress:
+    enabled: true

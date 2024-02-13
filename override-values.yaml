@@ -1,0 +1,4 @@
+
+corda-node:
+  graphdb:
+    host: test-node-graphdb

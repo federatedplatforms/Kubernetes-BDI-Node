@@ -1,5 +1,5 @@
 image:
-  name: andreasdog/corda-client-springboot:0.1.0
+  name: federatedbdi/bdi-api:0.3.9
   pullPolicy: IfNotPresent
 
 enabled: true
@@ -9,14 +9,10 @@ service:
   type: ClusterIP
 
 client:
-  tradelens:
-    apikey: ""
-    orgId: ""
   graphdb:
     host: namespace-graphdb
     port: 7200
-    privateRepository: private
-    repository: federated-shacl
+    repository: bdi
 
 ingress:
   enabled: false
@@ -25,9 +21,21 @@ ingress:
 configmap:
   server:
     port: 10050
-  config:
+  corda:
     rpc:
       host: corda
       port: 10006
       username: user1 
       password: vzzuABeCut3jGoJfEp94
+  graphdb:
+    sparql:
+      url: http://localhost:7200/repositories/bdi
+  bdi:
+    event:
+      distribution:
+        rules:
+          # options: broadcast, static
+          list: broadcast
+          #static:
+            # Comma separated list of static destinations, all events will be sent to the locations specified here.
+            #destinations: DCA/Schiphol/NL

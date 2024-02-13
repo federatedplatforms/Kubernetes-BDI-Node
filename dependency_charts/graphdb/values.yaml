@@ -7,7 +7,12 @@ enabled: true
 
 replicaCount: 1
 
+ingress:
+  enabled: false
+  host: graphdb.local
+
 image:
+  name: khaller/graphdb-free:10.2.1
   # repository: nginx
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
@@ -45,3 +50,9 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
+
+initRepository:
+  # enable repository initialization on startup: true | false
+  enabled: true
+  # repository name to initialize
+  repositoryName: bdi

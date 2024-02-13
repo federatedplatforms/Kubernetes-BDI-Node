@@ -5,13 +5,19 @@ annotations: {}
 service:
   type: LoadBalancer
 
+ingress:
+  enabled: false
+  host: corda-node.local
+
 graphdb:
   enabled: true
   host: namespace-graphdb
   port: 7200
   privateRepository: private
   repository: bdi
-image: corda/community:4.9.2-zulu-openjdk8:latest
+
+image: corda/community:4.9.2-zulu-openjdk8
+
 notary:
   isNotary: false
   isValidating: false

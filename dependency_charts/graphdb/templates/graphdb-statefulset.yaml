@@ -1,0 +1,56 @@
+{{- if .Values.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "graphdb.fullname" . }}
+  labels:
+    {{- include "graphdb.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "graphdb.fullname" . }}
+  replicas: {{ .Values.replicaCount }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ template "graphdb.fullname" $ }}-pv
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 8Gi
+  selector:
+    matchLabels:
+      {{- include "graphdb.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "graphdb.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: {{ template "graphdb.fullname" $ }}-config
+          configMap:
+            name: {{ template "graphdb.fullname" $ }}-config
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image.name }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+          - containerPort: {{ .Values.service.port }}
+            protocol: TCP
+            name: http
+        volumeMounts:
+          - mountPath: "/opt/graphdb/data"
+            name: {{ template "graphdb.fullname" $ }}-pv
+            subPath: data
+          {{- if .Values.initRepository.enabled }}
+          - mountPath: /repository.init/{{ .Values.initRepository.repositoryName }}/config.ttl
+            name: {{ template "graphdb.fullname" $ }}-config
+            subPath: config.ttl
+          {{ end -}}
+{{ end -}}

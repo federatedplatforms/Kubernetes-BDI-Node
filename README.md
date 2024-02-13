@@ -5,7 +5,7 @@ Helm scripts for deploying BDI node on a Kubernetes cluster with/without GraphDB
 ## Requirements
 
 - Kubernetes cluster (currently tested with Azure Kubernetes Engine)
-    - Preferably set up an Nginx Ingress, certmanager, public IP Address and DNS name along with your cluster, so that HTTPS access can be made to the deployed client node.
+    - Preferably set up a Nginx Ingress, certmanager, public IP Address and DNS name along with your cluster, so that HTTPS access can be made to the deployed client node.
 - Kubectl (configured with access to the cluster)
 - Helm
 
@@ -29,10 +29,13 @@ There are different approaches that exist to direct Level 4 traffic towards the 
 
 ### Configuration
 
-- Edit values.yaml as per the documentation provided. Replace all the marked values with appropriate
-    - (For Azure) For the Corda Node, use the Public IP Address created above.
-    - Enable the GraphDB and/or Spring API deployment as needed, based on the key 'enabled' for each block in the `values.yaml` file in the root directory.
-    - The Corda Client API Ingress hostname must be configured as required. If the LetsEncrypt ClusterIssuer has been deployed, then TLS will automatically be generated and configured. (See template for details). By default, it is enabled for easy viewing.
+- Preferred way is to create a values override file for a specific purpose. Then run helm upgrade using two value files. For example: 
+```
+helm upgrade --install -n DEPLOYMENT_NAMESPACE -f values.yaml -f specific-values.yaml DEPLOYMENT_NAME .
+```
+- (For Azure) For the Corda Node, use the Public IP Address created above.
+- Enable the GraphDB and/or Spring API deployment as needed, based on the key 'enabled' for each block in the `values.yaml` file in the root directory.
+- The Corda Client API Ingress hostname must be configured as required. If the LetsEncrypt ClusterIssuer has been deployed, then TLS will automatically be generated and configured. (See template for details). By default, it is enabled for easy viewing.
 
 ### Installation
 
@@ -46,7 +49,7 @@ helm dep update
 ```
 helm upgrade --install -n DEPLOYMENT_NAMESPACE --create-namespace DEPLOYMENT_NAME .
 ```
-For example, 
+For example: 
 
 ```
 helm upgrade --install -n bdi-node --create-namespace bdi-node .

@@ -11,10 +11,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - {{ .Values.ingress.host }}
+        - {{ .Release.Name }}.k8s.basicdatasharinginfrastructure.net
       secretName: {{ include "corda-client-api.fullname" . }}-tls
   rules:
-  - host: {{ .Values.ingress.host }}
+  - host: {{ .Release.Name }}.k8s.basicdatasharinginfrastructure.net
     http:
       paths:
       - path: /
