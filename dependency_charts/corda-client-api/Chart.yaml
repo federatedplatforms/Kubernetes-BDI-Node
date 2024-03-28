@@ -3,4 +3,4 @@ appVersion: 0.1.0
 description: Spring Boot API deployment for Corda BDI Node
 name: corda-client-api
 type: application
-version: 0.2.0-local
+version: 0.3.0-local

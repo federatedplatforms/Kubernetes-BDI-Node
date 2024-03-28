@@ -7,10 +7,10 @@ appVersion: "2.0"
 
 dependencies:
   - name: corda-node
-    version: 0.2.0-local
+    version: 0.3.0-local
     repository: file://dependency_charts/corda-node
   - name: corda-client-api
-    version: 0.2.0-local
+    version: 0.3.0-local
     repository: file://dependency_charts/corda-client-api
   - name: graphdb
     version: 0.2.0-local
