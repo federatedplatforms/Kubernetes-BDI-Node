@@ -47,7 +47,6 @@ spec:
             - '-Dfederated.node.corda.rpc.port={{ .Values.configmap.federated.node.corda.rpc.port }}'
             - '-Dfederated.node.corda.rpc.username={{ .Values.configmap.federated.node.corda.rpc.username }}'
             - '-Dfederated.node.corda.rpc.password={{ .Values.configmap.federated.node.corda.rpc.password }}'
-            - '-Dfederated.node.graphdb.sparql.url=http://{{ .Release.Name }}-graphdb:7200/repositories/federated'
             - '-Dfederated.node.event.distribution.rules.list={{ .Values.configmap.federated.node.event.distribution.rules.list }}'
             - -jar api.jar
           imagePullPolicy: {{ .Values.image.pullPolicy }}
