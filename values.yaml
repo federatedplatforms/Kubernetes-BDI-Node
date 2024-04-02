@@ -65,7 +65,7 @@ federated-node-api:
   
   # Image values
   image:
-    name: federatedbdi/federated-node-api:0.4.1 # Default image used for applications (change for development)
+    name: federatedbdi/federated-node-api:0.4.2 # Default image used for applications (change for development)
     pullPolicy: Always
   
 #  env:

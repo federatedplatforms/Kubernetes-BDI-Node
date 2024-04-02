@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 0.4.1
+appVersion: 0.4.2
 description: FEDeRATED Node API deployment
 name: federated-node-api
 type: application
