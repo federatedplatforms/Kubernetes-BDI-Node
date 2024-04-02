@@ -22,7 +22,7 @@ spec:
           pathType: Prefix
           backend:
             service:
-              name: {{ .Release.Name }}-graphdb
+              name: {{ .Release.Name }}-federated-graphdb
               port:
                 number: {{ .Values.service.port }}
 {{ end -}}
