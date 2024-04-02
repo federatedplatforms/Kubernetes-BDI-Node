@@ -37,6 +37,10 @@ spec:
             - /bin/bash
             - -c
             - java
+            - --add-opens java.base/java.time=ALL-UNNAMED
+            - --add-opens java.base/java.lang=ALL-UNNAMED
+            - --add-opens java.base/java.io=ALL-UNNAMED
+            - --add-opens java.base/java.net=ALL-UNNAMED
             - -Dspring.config.additional-location=file:/opt/api/config/
             - -Dserver.port={{ .Values.configmap.server.port }}
             - -Dfederated.node.corda.rpc.host={{ .Release.Name }}-corda-node
@@ -49,9 +53,6 @@ spec:
             - -Dfederated.node.event.distribution.rules.static.destinations={{ .Values.configmap.federated.node.event.distribution.rules.static.destinations }}
             {{- end }}
             - -jar api.jar
-          env:
-            - name: JDK_JAVA_OPTIONS
-              value: "--add-opens java.base/java.time=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.base/java.net=ALL-UNNAMED"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
