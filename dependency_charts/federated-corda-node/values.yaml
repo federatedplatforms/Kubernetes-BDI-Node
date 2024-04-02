@@ -14,7 +14,7 @@ graphdb:
   host: namespace-graphdb
   port: 7200
   privateRepository: private
-  repository: bdi
+  repository: federated
 
 image: corda/community:4.9.2-zulu-openjdk8
 

@@ -1,6 +1,6 @@
-# Kubernetes BDI Node
+# Kubernetes FEDeRATED Node
 
-Helm scripts for deploying BDI node on a Kubernetes cluster with/without GraphDB and/or Corda Client API
+Helm scripts for deploying FEDeRATED node on a Kubernetes cluster with/without GraphDB and/or Corda Client API
 
 ## Requirements
 
@@ -52,7 +52,7 @@ helm upgrade --install -n DEPLOYMENT_NAMESPACE --create-namespace DEPLOYMENT_NAM
 For example: 
 
 ```
-helm upgrade --install -n bdi-node --create-namespace bdi-node .
+helm upgrade --install -n federated --create-namespace demo-node1 .
 ```
 
 - Use Port-Forwarding with `kubectl` to open a connection to the GraphDB database.
@@ -70,11 +70,11 @@ helm uninstall -n DEPLOYMENT_NAMESPACE DEPLOYMENT_NAME
 ``` 
 For example, 
 ```
-helm uninstall -n bdi-node bdi-node
+helm uninstall -n federated demo-node1
 ```
 - For a clean uninstall, it may help to also delete the namespace entirely.
 
-### Testing the BDI endpoints
+### Testing the FEDeRATED Node endpoints
 Please refer to [this chapter in the Docker version of the BDI node](https://github.com/Federated-BDI/Docker-BDI-Node#testing-the-bdi-api).
 
 
