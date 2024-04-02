@@ -14,8 +14,8 @@ data:
   {{- if .Values.graphdb.enabled }}
   database.properties: |-
     datafetcher.type=sparql
-    graphdb.sparql.url=http://{{ .Release.Name }}-graphdb:7200/repositories/bdi
-    triplestore.host={{ .Release.Name }}-graphdb
+    graphdb.sparql.url=http://{{ .Release.Name }}-federated-graphdb:7200/repositories/federated
+    triplestore.host={{ .Release.Name }}-federated-graphdb
     triplestore.port={{ .Values.graphdb.port }}
     triplestore.private-repository={{ .Values.graphdb.privateRepository }}
     triplestore.repository={{ .Values.graphdb.repository }}
