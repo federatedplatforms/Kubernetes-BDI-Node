@@ -1,0 +1,6 @@
+apiVersion: v2
+name: federated-corda-node
+appVersion: 4.9.2
+description: FEDeRATED Corda Node helm chart
+type: application
+version: 0.4.0-local

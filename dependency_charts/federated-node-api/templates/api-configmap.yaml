@@ -1,0 +1,25 @@
+{{- if .Values.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "corda-client-api.fullname" $ }}-config
+data:
+  application.properties: |-
+    # This file allows for defining additional events types.
+    # ArrivalEvent and LoadEvent are built-in events, they can be used out of the box.
+    # They must be specified here in addition to any custom events as shown in the example below
+    # if they are going to be used.
+    federated.node.corda.rpc.host=localhost
+    federated.node.event.types[0].eventType=federated.events.arrival-event.v1
+    federated.node.event.types[0].rml=classpath:rml/EventMapping.ttl
+    # ArrivalEvent does not have a SHACL, so we do not specify it here
+    #federated.node.event.types[0].shacl=classpath:shacl/ArrivalEvent.ttl
+
+    #federated.node.event.types[1].eventType=federated.events.load-event.v1
+    #federated.node.event.types[1].rml=classpath:rml/EventMapping.ttl
+    #federated.node.event.types[1].shacl=classpath:shacl/LoadEvent.ttl
+
+    #federated.node.event.types[2].eventType=federated.events.custom-event.v1
+    #federated.node.event.types[2].rml=file:/opt/api/config/custom-rml.ttl
+    #federated.node.event.types[2].shacl=file:/opt/api/config/custom.ttl
+{{ end -}}

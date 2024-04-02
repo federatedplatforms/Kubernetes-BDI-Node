@@ -2,7 +2,7 @@
 # Edit as required, and you may find the other possible values in the templates.
 
 # Corda-Node Configuration 
-corda-node:
+federated-corda-node:
   # Azure LoadBalancer usage configuration
   annotations:
     # service.beta.kubernetes.io/azure-load-balancer-resource-group: $AZURE_RESOURCE_GROUP # Replace with the resource group of the Azure Kubernetes cluster
@@ -53,9 +53,9 @@ corda-node:
       base64: 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
 
 # Corda Client API Configuration
-corda-client-api:
+federated-node-api:
 
-  # Whether or not the accompanying Spring Boot client API instance is deployed
+  # Whether the accompanying Spring Boot client API instance is deployed
   enabled: true
 
   # Service type and port set for the Spring Boot API.
@@ -65,22 +65,12 @@ corda-client-api:
   
   # Image values
   image:
-    name: federatedbdi/federated-node-api:0.4.0 # Default image used for applications (change for development)
+    name: federatedbdi/federated-node-api:0.4.1 # Default image used for applications (change for development)
     pullPolicy: Always
   
-  env:
-    - name: JDK_JAVA_OPTION
-      value: --add-opens java.base/java.time=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED  
-
-  # Configuration parameters
-  # Replace the $HELM_DEPLOYMENT_NAME with the values you used for the deployment
-  client:
-    graphdb:
-      # host: -graphdb
-      port: 7200
-      privateRepository: private
-      repository: federated
-
+#  env:
+#    - name: JDK_JAVA_OPTIONS
+#      value: --add-opens java.base/java.time=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.base/java.net=ALL-UNNAMED
 
   # Enable ingress on the image (default parameters, see template for details)
   ingress:
@@ -96,26 +86,26 @@ corda-client-api:
       port: *serverPort
     
     # Access information for the Corda Node (Use same as in the Corda configuration above!)
-    corda:
-      rpc:
-        #host: "corda-host" # Replace with the same name used for the deployment.
-        port: 10006
-        username: user1
-        password: vzzuABeCut3jGoJfEp94
-
-    bdi:
-      event:
-        distribution:
-          rules:
-            # options: broadcast, static
-            list: broadcast
-            #static:
-              # Comma separated list of static destinations, all events will be sent to the locations specified here.
-              #destinations: DCA/Schiphol/NL
+    federated:
+      node:
+        corda:
+          rpc:
+            #host: "corda-host" # Replace with the same name used for the deployment.
+            port: 10006
+            username: user1
+            password: vzzuABeCut3jGoJfEp94
+        event:
+          distribution:
+            rules:
+              # options: broadcast, static
+              list: broadcast
+              #static:
+                # Semicolon separated list of static destinations, all events will be sent to the locations specified here.
+                #destinations: O=DCA,L=Schiphol,C=NL
 
 
 # Supporting GraphDB configuration
-graphdb:
+federated-graphdb:
   # Whether an accompanying GraphDB instance is deployed.
   enabled: true
 

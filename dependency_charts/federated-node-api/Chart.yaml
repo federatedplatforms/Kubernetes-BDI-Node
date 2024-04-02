@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: 0.4.1
+description: FEDeRATED Node API deployment
+name: federated-node-api
+type: application
+version: 0.4.0-local

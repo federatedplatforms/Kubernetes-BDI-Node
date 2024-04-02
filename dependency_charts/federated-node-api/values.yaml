@@ -1,0 +1,36 @@
+image:
+  name: federatedbdi/federated-node-api:0.4.1
+  pullPolicy: IfNotPresent
+
+enabled: true
+
+service:
+  port: 10050
+  type: ClusterIP
+
+ingress:
+  enabled: false
+  host: corda-client-api.local
+
+configmap:
+  server:
+    port: 10050
+  federated:
+    node:
+      corda:
+        rpc:
+          host: corda
+          port: 10006
+          username: user1
+          password: vzzuABeCut3jGoJfEp94
+      graphdb:
+        sparql:
+          url: http://localhost:7200/repositories/federated
+      event:
+        distribution:
+          rules:
+            # options: broadcast, static
+            list: broadcast
+            #static:
+            # Semicolon separated list of static destinations, all events will be sent to the locations specified here.
+            #destinations: O=DCA,L=Schiphol,C=NL

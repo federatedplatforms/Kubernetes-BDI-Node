@@ -1,0 +1,62 @@
+{{- if .Values.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "corda-client-api.fullname" . }}
+  labels:
+    {{- include "corda-client-api.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "corda-client-api.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "corda-client-api.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: {{ template "corda-client-api.fullname" $ }}-config
+          configMap:
+            name: {{ template "corda-client-api.fullname" $ }}-config
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image.name }}
+          volumeMounts:
+            - name: {{ template "corda-client-api.fullname" $ }}-config
+              mountPath: /opt/api/config
+          args:
+            - /bin/bash
+            - -c
+            - java
+            - -Dspring.config.additional-location=file:/opt/api/config/
+            - -Dserver.port={{ .Values.configmap.server.port }}
+            - -Dfederated.node.corda.rpc.host={{ .Release.Name }}-corda-node
+            - -Dfederated.node.corda.rpc.port={{ .Values.configmap.federated.node.corda.rpc.port }}
+            - -Dfederated.node.corda.rpc.username={{ .Values.configmap.federated.node.corda.rpc.username }}
+            - -Dfederated.node.corda.rpc.password={{ .Values.configmap.federated.node.corda.rpc.password }}
+            - -Dfederated.node.graphdb.sparql.url=http://{{ .Release.Name }}-graphdb:7200/repositories/federated
+            - -Dfederated.node.event.distribution.rules.list={{ .Values.configmap.federated.node.event.distribution.rules.list }}
+            {{- if ((.Values.configmap.federated.node.event.distribution.rules.static).destinations) }}
+            - -Dfederated.node.event.distribution.rules.static.destinations={{ .Values.configmap.federated.node.event.distribution.rules.static.destinations }}
+            {{- end }}
+            - -jar api.jar
+          env:
+            - name: JDK_JAVA_OPTIONS
+              value: "--add-opens java.base/java.time=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.base/java.net=ALL-UNNAMED"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.configmap.server.port }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+{{ end -}}

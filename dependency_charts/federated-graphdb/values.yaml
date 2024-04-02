@@ -55,4 +55,4 @@ initRepository:
   # enable repository initialization on startup: true | false
   enabled: true
   # repository name to initialize
-  repositoryName: bdi
+  repositoryName: federated

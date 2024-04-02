@@ -1,5 +1,5 @@
 
-corda-node:
+federated-corda-node:
 
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-resource-group: corda-k8s # Replace with the resource group of the Azure Kubernetes cluster
@@ -12,4 +12,4 @@ corda-node:
   rpcPort: 10006
   p2pAddress: 20.31.101.154
 
-  myLegalName: OU=BDI,O=DCA,L=Schiphol,C=NL
+  myLegalName: OU=Node,O=Demo,L=Utrecht,C=NL
