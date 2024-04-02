@@ -20,4 +20,4 @@ corda-client-api:
             list: static
             static:
               # Comma separated list of static destinations, all events will be sent to the locations specified here.
-              destinations: DCA/Schiphol/NL
+              destinations: O=DCA,L=Schiphol,C=NL
