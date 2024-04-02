@@ -46,11 +46,11 @@ spec:
                 --add-opens java.base/java.net=ALL-UNNAMED
                 -Dspring.config.additional-location=file:/opt/api/config/
                 -Dserver.port={{ .Values.configmap.server.port }}
-                -Dfederated.node.corda.rpc.host={{ .Release.Name }}-corda-node
+                -Dfederated.node.corda.rpc.host={{ .Release.Name }}-federated-corda-node
                 -Dfederated.node.corda.rpc.port={{ .Values.configmap.federated.node.corda.rpc.port }}
                 -Dfederated.node.corda.rpc.username={{ .Values.configmap.federated.node.corda.rpc.username }}
                 -Dfederated.node.corda.rpc.password={{ .Values.configmap.federated.node.corda.rpc.password }}
-                -Dfederated.node.graphdb.sparql.url=http://{{ .Release.Name }}-graphdb:7200/repositories/federated
+                -Dfederated.node.graphdb.sparql.url=http://{{ .Release.Name }}-federated-graphdb:7200/repositories/federated
                 -Dfederated.node.event.distribution.rules.list={{ .Values.configmap.federated.node.event.distribution.rules.list }}
               {{- if ((.Values.configmap.federated.node.event.distribution.rules.static).destinations) }}
                 -Dfederated.node.event.distribution.rules.static.destinations={{ .Values.configmap.federated.node.event.distribution.rules.static.destinations }}

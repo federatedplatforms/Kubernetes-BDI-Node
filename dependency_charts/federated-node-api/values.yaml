@@ -23,9 +23,6 @@ configmap:
           port: 10006
           username: user1
           password: vzzuABeCut3jGoJfEp94
-      graphdb:
-        sparql:
-          url: http://localhost:7200/repositories/federated
       event:
         distribution:
           rules:
