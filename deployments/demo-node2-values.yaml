@@ -8,8 +8,8 @@ federated-corda-node:
     type: LoadBalancer
     loadBalancerIP: 20.31.101.154 # Replace with pre-instantiated Azure Public IP Address
 
-  p2pPort: 10005
-  rpcPort: 10006
+  p2pPort: 10008
+  rpcPort: 10009
   p2pAddress: 20.31.101.154
 
   myLegalName: OU=Node2,O=Demo,L=Utrecht,C=NL
@@ -19,6 +19,9 @@ federated-node-api:
     federated:
       node:
         event:
+          corda:
+            rpc:
+              port: 10009
           distribution:
             rules:
               list: static
