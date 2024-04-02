@@ -16,13 +16,12 @@ federated-corda-node:
 
 federated-node-api:
   configmap:
+
     federated:
       node:
         event:
           distribution:
             rules:
-              # options: broadcast, static
               list: static
-                #static:
-                # Semicolon separated list of static destinations, all events will be sent to the locations specified here.
-              destinations: OU=Node2,O=Demo,L=Utrecht,C=NL
+              static:
+                destinations: OU=Node2,O=Demo,L=Utrecht,C=NL
