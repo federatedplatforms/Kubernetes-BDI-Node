@@ -7,3 +7,6 @@
 .history
 
 Chart.lock
+
+*.iml
+.idea/
