@@ -1,0 +1,28 @@
+
+federated-corda-node:
+
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-resource-group: corda-k8s # Replace with the resource group of the Azure Kubernetes cluster
+
+  service:
+    type: LoadBalancer
+    loadBalancerIP: 20.31.101.154 # Replace with pre-instantiated Azure Public IP Address
+
+  p2pPort: 10005
+  rpcPort: 10006
+  p2pAddress: 20.31.101.154
+
+  myLegalName: OU=Node2,O=Demo,L=Utrecht,C=NL
+
+federated-node-api:
+  configmap:
+    federated:
+      node:
+        event:
+          distribution:
+            rules:
+              # options: broadcast, static
+              list: static
+                #static:
+              # Semicolon separated list of static destinations, all events will be sent to the locations specified here.
+              destinations: OU=Node1,O=Demo,L=Utrecht,C=NL
