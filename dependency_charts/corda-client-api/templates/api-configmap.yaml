@@ -4,27 +4,25 @@ kind: ConfigMap
 metadata:
   name: {{ template "corda-client-api.fullname" $ }}-config
 data:
-  custom-rml.ttl: |-
-
   application.properties: |-
     # This file allows for defining additional events types.
     # ArrivalEvent and LoadEvent are built-in events, they can be used out of the box.
     # They must be specified here in addition to any custom events as shown in the example below
     # if they are going to be used.
-
-    bdi.federated.event.types[0].eventType=federated.events.arrival-event.v1
-    bdi.federated.event.types[0].name=ArrivalEvent
-    bdi.federated.event.types[0].rml=classpath:rml/EventMapping.ttl
+    federated.node.corda.rpc.host=localhost
+    bdi.federated.event.types[0].eventType=federated.events.placeholder.v1
+    bdi.federated.event.types[0].name=placeholder
+    # bdi.federated.event.types[0].rml=file:/opt/api/config/BatteryRML.ttl
     # ArrivalEvent does not have a SHACLE, so we do not specify it here
     #bdi.federated.event.types[0].shacl=classpath:shacl/ArrivalEvent.ttl
 
-    bdi.federated.event.types[1].eventType=federated.events.load-event.v1
-    bdi.federated.event.types[1].name=LoadEvent
-    bdi.federated.event.types[1].rml=classpath:rml/EventMapping.ttl
-    #bdi.federated.event.types[1].shacl=classpath:shacl/LoadEvent.ttl
+    #bdi.federated.event.types[1].eventType=federated.events.load-event.v1
+    #bdi.federated.event.types[1].name=LoadEvent
+    #bdi.federated.event.types[1].rml=classpath:rml/EventMapping.ttl
+    ##bdi.federated.event.types[1].shacl=classpath:shacl/LoadEvent.ttl
 
-    bdi.federated.event.types[2].eventType=federated.events.custom-event.v1
-    bdi.federated.event.types[2].name=CustomEvent
-    bdi.federated.event.types[2].rml=file:/opt/api/config/custom-rml.ttl
+    #bdi.federated.event.types[2].eventType=federated.events.custom-event.v1
+    #bdi.federated.event.types[2].name=CustomEvent
+    #bdi.federated.event.types[2].rml=file:/opt/api/config/custom-rml.ttl
     #bdi.federated.event.types[2].shacl=file:/opt/api/config/custom.ttl
 {{ end -}}

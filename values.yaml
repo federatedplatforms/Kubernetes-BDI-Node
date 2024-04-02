@@ -15,7 +15,7 @@ corda-node:
     enabled: true # Enable if enabled below.
     port: 7200 # Use port defined below.
     privateRepository: private
-    repository: bdi
+    repository: federated
 
   image: corda/community:4.9.2-zulu-openjdk8 # Contains 0 contracts.
   # Contracts are currently pulled from the public Docker-BDI-Node repository, and mounted at 
@@ -65,8 +65,12 @@ corda-client-api:
   
   # Image values
   image:
-    name: federatedbdi/bdi-api:0.3.9 # Default image used for applications (change for development)
+    name: federatedbdi/federated-node-api:0.4.0 # Default image used for applications (change for development)
     pullPolicy: Always
+  
+  env:
+    - name: JDK_JAVA_OPTION
+      value: --add-opens java.base/java.time=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED  
 
   # Configuration parameters
   # Replace the $HELM_DEPLOYMENT_NAME with the values you used for the deployment
@@ -75,7 +79,7 @@ corda-client-api:
       # host: -graphdb
       port: 7200
       privateRepository: private
-      repository: bdi
+      repository: federated
 
 
   # Enable ingress on the image (default parameters, see template for details)

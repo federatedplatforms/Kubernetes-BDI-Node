@@ -13,6 +13,7 @@ data:
     ishare.enabled=false
   {{- if .Values.graphdb.enabled }}
   database.properties: |-
+    datafetcher.type=sparql
     graphdb.sparql.url=http://{{ .Release.Name }}-graphdb:7200/repositories/bdi
     triplestore.host={{ .Release.Name }}-graphdb
     triplestore.port={{ .Values.graphdb.port }}
