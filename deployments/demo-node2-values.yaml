@@ -18,10 +18,10 @@ federated-node-api:
   configmap:
     federated:
       node:
+        corda:
+          rpc:
+            port: 10009
         event:
-          corda:
-            rpc:
-              port: 10009
           distribution:
             rules:
               list: static
