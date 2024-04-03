@@ -14,9 +14,13 @@ federated-corda-node:
 
   myLegalName: OU=Node1,O=Demo,L=Utrecht,C=NL
 
-federated-node-api:
-  configmap:
+  dataFetcherType: codognotto
+  dataFetcherGetEndpointUrl: https://fenix-codognotto.azurewebsites.net/api/GetOrderEvent/90/2023/192
+  dataFetcherRmlEndpointUrl: https://translate.lab.semantic-treehouse.nl/api/18
 
+federated-node-api:
+
+  configmap:
     federated:
       node:
         event:

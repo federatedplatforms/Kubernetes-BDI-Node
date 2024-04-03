@@ -13,7 +13,9 @@ data:
     ishare.enabled=false
   {{- if .Values.graphdb.enabled }}
   database.properties: |-
-    datafetcher.type=sparql
+    datafetcher.type={{ .Values.dataFetcherType }}
+    get.endpoint.url={{ .Values.dataFetcherGetEndpointUrl }}
+    rml.endpoint.url={{ .Values.dataFetcherRmlEndpointUrl }}
     graphdb.sparql.url=http://{{ .Release.Name }}-federated-graphdb:7200/repositories/federated
     triplestore.host={{ .Release.Name }}-federated-graphdb
     triplestore.port={{ .Values.graphdb.port }}
