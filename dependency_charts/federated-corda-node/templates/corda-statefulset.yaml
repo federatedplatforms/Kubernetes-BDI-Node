@@ -58,10 +58,10 @@ spec:
         - name: CORDA_ARGS
           value: "--initial-registration --network-root-truststore /tmp/network-truststore.jks --network-root-truststore-password trustpass"
         ports:
-          - containerPort: 10006
+          - containerPort: {{ .Values.rpcPort }}
             protocol: TCP
             name: rpc
-          - containerPort: 10005
+          - containerPort: {{ .Values.p2pPort }}
             protocol: TCP
             name: p2p
         volumeMounts:
@@ -84,10 +84,10 @@ spec:
         image: {{ .Values.image }}
         imagePullPolicy: IfNotPresent
         ports:
-          - containerPort: 10006
+          - containerPort: {{ .Values.rpcPort }}
             protocol: TCP
             name: rpc
-          - containerPort: 10005
+          - containerPort: {{ .Values.p2pPort }}
             protocol: TCP
             name: p2p
         volumeMounts:
