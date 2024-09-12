@@ -24,6 +24,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
+        - name: {{ template "corda-client-api.fullname" $ }}-h2-data
+          persistentVolumeClaim:
+            claimName: {{ template "corda-client-api.fullname" $ }}-pv-claim
         - name: {{ template "corda-client-api.fullname" $ }}-config
           configMap:
             name: {{ template "corda-client-api.fullname" $ }}-config
@@ -33,6 +36,8 @@ spec:
           volumeMounts:
             - name: {{ template "corda-client-api.fullname" $ }}-config
               mountPath: /opt/api/config
+            - name: {{ template "corda-client-api.fullname" $ }}-h2-data
+              mountPath: /h2/data
           args:
             - /bin/bash
             - -c
