@@ -36,6 +36,12 @@ helm upgrade --install -n DEPLOYMENT_NAMESPACE -f values.yaml -f specific-values
 - (For Azure) For the Corda Node, use the Public IP Address created above.
 - Enable the GraphDB and/or Spring API deployment as needed, based on the key 'enabled' for each block in the `values.yaml` file in the root directory.
 - The Corda Client API Ingress hostname must be configured as required. If the LetsEncrypt ClusterIssuer has been deployed, then TLS will automatically be generated and configured. (See template for details). By default, it is enabled for easy viewing.
+- If needed Change the user(name) and password values in the federated-corda-node (in the security section) and the 
+  federated-node-api (in the federated section) but keep them matched to ensure access from the API to the Corda 
+  node.  
+ 
+
+
 
 ### Installation
 
