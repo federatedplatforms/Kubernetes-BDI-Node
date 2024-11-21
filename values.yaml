@@ -45,7 +45,7 @@ federated-corda-node:
           - ALL
   compatibilityZone:
     enabled: true
-    compatibilityZoneURL: https://nms.k8s.basicdatasharinginfrastructure.net
+    compatibilityZoneURL: https://nms.federated-infrastructure.net
   secrets:
     create: true
     name: corda-secrets
