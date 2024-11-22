@@ -81,6 +81,50 @@ helm uninstall -n federated demo-node1
 Please refer to [this chapter in the Docker version of the BDI node](https://github.com/Federated-BDI/Docker-BDI-Node#testing-the-bdi-api).
 
 
+
+
 ## Note
 - The provided Helm scripts are provided in a rough state and may change.
 - Currently the steps to designate a node as a Notary are manually done through the command-line as described in the official Corda node documentation. Due to limitations of Kubernetes, we do not provide an automated way to set up a Notary.
+  This deployment script does however enable you to deploy a Single node as a Notary. The validation of this notary 
+  and enabling it for the other nodes is a manual process describved below : 
+
+### Validating a notary at the NMS 
+
+Prequisitions :
+
+- NMS started 
+- CORDA nodes deployed and registered 
+- Notary Deployed and registered
+
+1. Designate the Corda Notary
+2. Delete the network-parameters file on the notary node 
+3. Start the notary node and other nodes
+
+#### 1. Designate the notary
+
+login to the NMS API and cache the token
+````
+curl -X POST "http://<NMS url>/admin/api/login" -H  "accept: text/plain" -H  "Content-Type: application/json" -d "{  \"user\": \"sa\",  \"password\": \"admin\"}"`
+````
+Download the NnodeInfo file from the running Notary
+
+```` 
+kubectl cp -n <notary namespace> <notary pod>:/opt/corda/nodeInfo-XXXXXXXXXXX .
+````
+
+Upload the notary
+````
+curl -X POST -H "Authorization: Bearer <the token>" -H "accept: text/plain" -H "Content-Type: application/octet-stream" --data-binary @<the nodeInfo file> http://<NMS URL>/admin/api/notaries/validating
+````
+
+In the NMS the notary should now be flagged as a notary in the node list 
+
+
+#### 2. Delete the network-parameters file on the notary node
+
+go into the command prompt of the running Notary pod ad delete the network-parameters file in the /opt/corda directory 
+
+#### 3. Restart the notary node and other nodes
+
+In the azure you can delete the running pods, which will restart due to the statefull deployments. 
