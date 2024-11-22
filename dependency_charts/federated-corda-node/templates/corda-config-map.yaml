@@ -34,7 +34,9 @@ data:
     devMode={{ .Values.devMode }}
     myLegalName="{{ .Values.myLegalName }}"
     {{- if .Values.notary.isNotary  }}
-    notary = [validating : {{ .Values.notary.isValidating }}]
+    notary : { validating : {{ .Values.notary.isValidating }} 
+               serviceLegalName : "{{ .Values.notary.serviceLegalname }}" 
+              }
     {{- end }}
     p2pAddress={{ printf "%s:%v" .Values.p2pAddress .Values.p2pPort | quote }}
     rpcSettings {
